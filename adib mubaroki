@@ -1,0 +1,110 @@
+import java.util.Scanner;
+
+class Person {
+    String name;
+    String address;
+
+    public Person(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+}
+
+class Student extends Person {
+    int numCourses;
+    String[] courses;
+    String[] grades;
+
+    public Student(String name, String address) {
+        super(name, address);
+        numCourses = 0;
+        courses = new String[30]; // Maksimum 30 mata kuliah
+        grades = new String[30];
+    }
+
+    public void addCourseGrade(String course, String grade) {
+        courses[numCourses] = course;
+        grades[numCourses] = grade;
+        numCourses++;
+    }
+
+    public void printCourses() {
+        System.out.println("Courses enrolled:");
+        for (int i = 0; i < numCourses; i++) {
+            System.out.println(courses[i] + ": " + grades[i]);
+        }
+    }
+}
+
+class Teacher extends Person {
+    int numCourses;
+    String[] courses;
+
+    public Teacher(String name, String address) {
+        super(name, address);
+        numCourses = 0;
+        courses = new String[10]; // Maksimum 10 mata kuliah yang diampu
+    }
+
+    public void addCourse(String course) {
+        courses[numCourses] = course;
+        numCourses++;
+    }
+
+    public void printCourses() {
+        System.out.println("Courses taught:");
+        for (int i = 0; i < numCourses; i++) {
+            System.out.println(courses[i]);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter student's name:");
+        String studentName = scanner.nextLine();
+        System.out.println("Enter student's address:");
+        String studentAddress = scanner.nextLine();
+        Student student = new Student(studentName, studentAddress);
+
+        System.out.println("Enter teacher's name:");
+        String teacherName = scanner.nextLine();
+        System.out.println("Enter teacher's address:");
+        String teacherAddress = scanner.nextLine();
+        Teacher teacher = new Teacher(teacherName, teacherAddress);
+
+        System.out.println("Enter number of courses for the student:");
+        int numStudentCourses = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        for (int i = 0; i < numStudentCourses; i++) {
+            System.out.println("Enter course name for student:");
+            String course = scanner.nextLine();
+            System.out.println("Enter grade for course:");
+            String grade = scanner.nextLine();
+            student.addCourseGrade(course, grade);
+        }
+
+        System.out.println("Enter number of courses for the teacher:");
+        int numTeacherCourses = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        for (int i = 0; i < numTeacherCourses; i++) {
+            System.out.println("Enter course name for teacher:");
+            String course = scanner.nextLine();
+            teacher.addCourse(course);
+        }
+
+        System.out.println("\nStudent information:");
+        System.out.println("Name: " + student.name);
+        System.out.println("Address: " + student.address);
+        student.printCourses();
+
+        System.out.println("\nTeacher information:");
+        System.out.println("Name: " + teacher.name);
+        System.out.println("Address: " + teacher.address);
+        teacher.printCourses();
+
+        scanner.close();
+    }
+}
